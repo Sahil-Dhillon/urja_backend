@@ -27,6 +27,14 @@ mongoose.connect(process.env.DATABASE, function (err) {
 app.get('/', (req, res) => {
     res.send('Server started successfully!')
 })
+app.get('/getTeams', expressAsyncHandler(async (req, res) => {
+    const teams = await Team.find({})
+    if (teams) {
+        res.send(teams);
+    } else {
+        res.status(404).send({ message: 'Teams Not Found!' });
+    }
+}))
 app.post('/teamsignup', expressAsyncHandler(async (req, res) => {
     const team = new Team({
         managerName: req.body.managerName,
