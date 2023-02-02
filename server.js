@@ -12,8 +12,7 @@ const Team = mongoose.model('Team', new mongoose.Schema(
         sport: { type: String, required: true },
         collegeName: { type: String, required: true },
         numberOfPlayers: { type: Number, required: true },
-        players: { type: Array, required: true },
-        tId: { type: String, required: true, unique: true }
+        players: { type: String, required: true },
     }
 ))
 
@@ -42,14 +41,13 @@ app.post('/teamsignup', expressAsyncHandler(async (req, res) => {
         sport: req.body.sport,
         collegeName: req.body.collegeName,
         numberOfPlayers: req.body.playerNumber,
-        players: req.body.playerNameandContact,
-        tId: req.body.tId
+        players: req.body.playerNameandContact
     })
     const createdTeam = await team.save()
     if (createdTeam) {
         res.status(201).send({ message: 'New Team Registered', team: createdTeam, success: 1 });
     } else {
-        res.status(500).send({ message: "Team not registered! Try Again.", success: 0 })
+        res.status(500).send({ message: "Team not registered! Try Again.", success: 0 });
     }
 }))
 app.use((err, req, res, next) => {
